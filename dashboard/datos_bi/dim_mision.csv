@@ -1,0 +1,24 @@
+﻿id,tema,nivel,formato,duracion_min,titulo,descripcion
+PL-1,Programación lineal,1,oucontent,15,Mezcla de producción guiada,"Con pistas paso a paso, decide cuántas unidades de dos productos fabricar para maximizar la utilidad con dos recursos limitados (método gráfico)."
+PL-2,Programación lineal,2,quiz,25,Plan semanal de la planta,"Formula el modelo de PL del plan semanal (3 productos, 3 máquinas) y valida la solución en el simulador."
+PL-3,Programación lineal,3,quiz,40,Análisis de sensibilidad bajo presión,Un proveedor sube costos: usa precios sombra para reajustar el plan sin resolver de nuevo.
+TA-1,Transporte y asignación,1,resource,15,Rutas al almacén,Asigna camiones a 3 almacenes con la regla de la esquina noroeste y compara el costo con una guía visual.
+TA-2,Transporte y asignación,2,forumng,30,Asignación de operarios en equipo,"En equipo, aplica el método húngaro para asignar operarios a estaciones y discute la solución en el foro."
+TA-3,Transporte y asignación,3,quiz,40,Red logística con transbordo,Optimiza una red de distribución con nodos de transbordo y capacidades limitadas.
+IN-1,Gestión de inventarios,1,oucontent,15,El almacén que se desborda,Lectura interactiva sobre el lote económico (EOQ) con un ejemplo resuelto del almacén de la fábrica.
+IN-2,Gestión de inventarios,2,quiz,25,Punto de reorden,Calcula EOQ y punto de reorden con demanda conocida y evita quiebres de stock durante 4 turnos simulados.
+IN-3,Gestión de inventarios,3,quiz,40,Inventario con demanda incierta,Define stock de seguridad con demanda aleatoria y descuentos por volumen.
+CO-1,Teoría de colas,1,resource,15,La fila en la estación de pintura,"Observa la animación de una cola M/M/1 y relaciona tasa de llegada, tasa de servicio y espera."
+CO-2,Teoría de colas,2,quiz,25,¿Cuántos servidores?,"Calcula Lq, Wq y utilización para decidir entre 1 y 2 estaciones de servicio (M/M/c)."
+CO-3,Teoría de colas,3,forumng,40,Diseño de la línea de despacho,Propón y defiende en el foro un diseño de despacho que minimice costo de espera + costo de servidores.
+BL-1,Balanceo de líneas,1,oucontent,15,Ordena las tareas,"Arrastra tareas a estaciones respetando precedencias, con retroalimentación inmediata del tiempo de ciclo."
+BL-2,Balanceo de líneas,2,quiz,25,Eficiencia de la línea,Balancea una línea de 10 tareas con la regla del mayor tiempo y calcula la eficiencia.
+BL-3,Balanceo de líneas,3,quiz,40,Línea de modelos mixtos,Balancea una línea que fabrica dos modelos con demanda distinta.
+PR-1,Planificación de proyectos (PERT/CPM),1,resource,15,La ruta crítica de la remodelación,Identifica la ruta crítica en un diagrama de red ya dibujado.
+PR-2,Planificación de proyectos (PERT/CPM),2,forumng,30,Instalación de la nueva máquina,"Construye la red PERT, calcula holguras y comparte el cronograma en el foro del equipo."
+PR-3,Planificación de proyectos (PERT/CPM),3,quiz,40,Compresión de proyecto (crashing),Reduce la duración del proyecto al menor costo adicional posible.
+SI-1,Simulación de procesos,1,oucontent,15,Lanza los dados de la demanda,Simula a mano 10 días de demanda con números aleatorios y observa la variabilidad.
+SI-2,Simulación de procesos,2,quiz,25,Montecarlo en la planta,Simula 100 turnos de la planta y estima la producción esperada con intervalo de confianza.
+SI-3,Simulación de procesos,3,forumng,40,Gemelo digital de la fábrica,Compara dos configuraciones de la fábrica con simulación de eventos discretos y argumenta la mejor.
+RE-0,Transversal,0,especial,5,Misión de reenganche (5 min),Micro-misión con recompensa inmediata para volver a la fábrica + aviso al docente.
+PC-0,Transversal,0,especial,5,Checkpoint de entregas,Divide la próxima entrega en 3 hitos con fecha; cada hito desbloquea una mejora de la fábrica.

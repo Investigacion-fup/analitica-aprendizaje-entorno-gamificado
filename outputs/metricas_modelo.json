@@ -1,0 +1,85 @@
+{
+  "modelo": "RandomForestClassifier",
+  "hiperparametros": {
+    "class_weight": "balanced",
+    "max_depth": 18,
+    "max_features": "sqrt",
+    "min_samples_leaf": 5,
+    "n_estimators": 300
+  },
+  "n_variables": 43,
+  "entrenamiento": {
+    "filas": 85397,
+    "presentaciones": [
+      "2013B",
+      "2013J",
+      "2014B"
+    ]
+  },
+  "prueba": {
+    "filas": 42824,
+    "presentacion": "2014J"
+  },
+  "cv_auc_media": 0.8593,
+  "cv_auc_desv": 0.0135,
+  "prueba_global": {
+    "n": 42824,
+    "tasa_riesgo_real": 0.3629,
+    "accuracy": 0.7703,
+    "precision": 0.6801,
+    "recall": 0.6931,
+    "f1": 0.6865,
+    "auc": 0.8405
+  },
+  "prueba_por_corte": {
+    "30": {
+      "n": 9203,
+      "tasa_riesgo_real": 0.407,
+      "accuracy": 0.691,
+      "precision": 0.6096,
+      "recall": 0.6695,
+      "f1": 0.6382,
+      "auc": 0.7569
+    },
+    "60": {
+      "n": 8818,
+      "tasa_riesgo_real": 0.3812,
+      "accuracy": 0.7478,
+      "precision": 0.6689,
+      "recall": 0.6697,
+      "f1": 0.6693,
+      "auc": 0.813
+    },
+    "90": {
+      "n": 8533,
+      "tasa_riesgo_real": 0.3605,
+      "accuracy": 0.7718,
+      "precision": 0.6839,
+      "recall": 0.6824,
+      "f1": 0.6832,
+      "auc": 0.8368
+    },
+    "120": {
+      "n": 8260,
+      "tasa_riesgo_real": 0.3393,
+      "accuracy": 0.8091,
+      "precision": 0.7202,
+      "recall": 0.7153,
+      "f1": 0.7177,
+      "auc": 0.8729
+    },
+    "150": {
+      "n": 8010,
+      "tasa_riesgo_real": 0.3187,
+      "accuracy": 0.8447,
+      "precision": 0.7613,
+      "recall": 0.747,
+      "f1": 0.7541,
+      "auc": 0.9044
+    }
+  },
+  "eficiencia": {
+    "segundos_entrenamiento": 13.1,
+    "ms_prediccion_por_estudiante": 0.0083
+  }
+}

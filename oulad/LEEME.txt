@@ -1,0 +1,12 @@
+DATOS DE ENTRADA: Open University Learning Analytics Dataset (OULAD)
+
+Los datos no se incluyen en este repositorio porque son públicos y ocupan unos 450 MB.
+
+1. Descárgalos de: https://analyse.kmi.open.ac.uk/open_dataset
+2. Descomprime el archivo y copia en ESTA carpeta (oulad/) los 7 archivos CSV:
+   assessments.csv, courses.csv, studentAssessment.csv, studentInfo.csv,
+   studentRegistration.csv, studentVle.csv, vle.csv
+
+Licencia de los datos: CC BY 4.0.
+Cita: Kuzilek, J., Hlosta, M., & Zdrahal, Z. (2017). Open University Learning Analytics dataset.
+Scientific Data, 4, 170171. https://doi.org/10.1038/sdata.2017.171

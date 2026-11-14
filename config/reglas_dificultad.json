@@ -1,0 +1,33 @@
+{
+  "descripcion": "Reglas de ajuste dinámico de dificultad de la fábrica gamificada. El desempeño semanal D (0-1) se suaviza y se compara con la zona de flujo; el nivel de dificultad L (1-5) sube o baja en proporción a la distancia a esa zona, con un paso máximo por semana. Las variables de la fábrica se interpolan linealmente entre su valor en el nivel 1 y en el nivel 5, y luego se aplican los modificadores del perfil diagnosticado.",
+  "nivel": {"min": 1, "max": 5, "inicial": 3},
+  "zona_flujo": {"min": 0.45, "max": 0.75},
+  "suavizado_alpha": 0.5,
+  "ganancia": 2.0,
+  "paso_max_semana": 0.5,
+  "desempeno": {
+    "pesos": {"nota": 0.4, "actividad": 0.35, "puntualidad": 0.25},
+    "nota_sin_evaluaciones": 0.6,
+    "actividad_tope": 1.5
+  },
+  "variables_fabrica": {
+    "velocidad_maquinas":        {"nivel_1": 0.6,  "nivel_5": 1.4,  "unidad": "multiplicador"},
+    "tasa_llegada_pedidos":      {"nivel_1": 4,    "nivel_5": 12,   "unidad": "pedidos/hora"},
+    "prob_falla_maquina":        {"nivel_1": 0.02, "nivel_5": 0.14, "unidad": "probabilidad por turno"},
+    "tiempo_limite_turno":       {"nivel_1": 20,   "nivel_5": 10,   "unidad": "minutos"},
+    "variabilidad_demanda":      {"nivel_1": 0.1,  "nivel_5": 0.5,  "unidad": "coef. de variación"},
+    "nivel_pistas":              {"nivel_1": 3,    "nivel_5": 0,    "unidad": "pistas disponibles", "entero": true}
+  },
+  "modificadores_perfil": {
+    "Frustración":      {"velocidad_maquinas": {"multiplicar": 0.85}, "nivel_pistas": {"sumar": 1}, "prob_falla_maquina": {"multiplicar": 0.5}},
+    "Desconexión":      {"tiempo_limite_turno": {"multiplicar": 1.25}, "modo_reenganche": {"fijar": true}, "multiplicador_recompensa": {"fijar": 2.0}},
+    "Procrastinación":  {"checkpoints_entrega": {"fijar": true}, "tiempo_limite_turno": {"multiplicar": 0.9}},
+    "Bajo rendimiento": {"nivel_pistas": {"sumar": 1}, "variabilidad_demanda": {"multiplicar": 0.7}},
+    "Avanzado":         {"eventos_sorpresa": {"fijar": true}, "multiplicador_recompensa": {"fijar": 1.5}}
+  },
+  "limites": {
+    "velocidad_maquinas": [0.5, 1.5],
+    "nivel_pistas": [0, 4],
+    "tiempo_limite_turno": [8, 30]
+  }
+}

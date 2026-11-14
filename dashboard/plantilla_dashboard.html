@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Monitoreo Docente IO</title>
+<style>
+:root {
+  --bg: #f6f7f9; --panel: #ffffff; --text: #1d2330; --muted: #5d6677; --line: #e3e6ec;
+  --accent: #2456c9; --accent-soft: #e4ebfb;
+  --bajo: #2e8b57; --moderado: #c99a06; --alto: #e0752d; --critico: #c8323c;
+  --serie2: #7a4fc2;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #12151b; --panel: #1b2029; --text: #e6e9ef; --muted: #9aa3b4; --line: #2c3340;
+    --accent: #6f98f2; --accent-soft: #233150;
+    --bajo: #4cbb7f; --moderado: #e3b52b; --alto: #f08e4a; --critico: #f0616b; --serie2: #a685e6;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #12151b; --panel: #1b2029; --text: #e6e9ef; --muted: #9aa3b4; --line: #2c3340;
+  --accent: #6f98f2; --accent-soft: #233150;
+  --bajo: #4cbb7f; --moderado: #e3b52b; --alto: #f08e4a; --critico: #f0616b; --serie2: #a685e6;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--text);
+  font: 14px/1.45 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+header { padding: 20px 24px 8px; }
+h1 { margin: 0; font-size: 22px; }
+.sub { color: var(--muted); margin-top: 2px; }
+.controles { display: flex; flex-wrap: wrap; gap: 12px 20px; align-items: center; padding: 12px 24px;
+  position: sticky; top: 0; background: var(--bg); z-index: 5; border-bottom: 1px solid var(--line); }
+.controles label { color: var(--muted); font-size: 12px; display: flex; flex-direction: column; gap: 4px; }
+select, input[type=search] { font: inherit; padding: 6px 8px; border: 1px solid var(--line); border-radius: 6px;
+  background: var(--panel); color: var(--text); }
+.semana { display: flex; align-items: center; gap: 10px; }
+.semana input { width: 220px; accent-color: var(--accent); }
+.semana b { font-size: 18px; min-width: 92px; }
+button { font: inherit; border: 1px solid var(--accent); background: var(--accent); color: #fff;
+  padding: 6px 14px; border-radius: 6px; cursor: pointer; }
+button.sec { background: transparent; color: var(--accent); }
+main { padding: 16px 24px 40px; display: grid; gap: 16px; }
+.kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; }
+.kpi, .panel { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; }
+.kpi .v { font-size: 26px; font-weight: 650; font-variant-numeric: tabular-nums; }
+.kpi .l { color: var(--muted); font-size: 12px; }
+.kpi .d { font-size: 12px; margin-top: 2px; }
+.fila { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 16px; }
+@media (max-width: 1000px) { .fila { grid-template-columns: 1fr; } }
+.panel h2 { font-size: 14px; margin: 0 0 10px; }
+.panel h2 small { color: var(--muted); font-weight: 400; }
+svg text { fill: var(--muted); font-size: 11px; }
+.barras .b { display: grid; grid-template-columns: 150px 1fr 48px; gap: 8px; align-items: center; margin: 5px 0; font-size: 12px; }
+.barras .b span:first-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.barras .t { height: 14px; background: var(--accent-soft); border-radius: 3px; overflow: hidden; }
+.barras .t i { display: block; height: 100%; background: var(--accent); }
+.barras .n { text-align: right; font-variant-numeric: tabular-nums; color: var(--muted); }
+.tabla-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th { text-align: left; color: var(--muted); font-weight: 500; font-size: 12px; padding: 6px 8px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+td { padding: 7px 8px; border-bottom: 1px solid var(--line); vertical-align: middle; }
+tbody tr { cursor: pointer; }
+tbody tr:hover, tbody tr.sel { background: var(--accent-soft); }
+.num { font-variant-numeric: tabular-nums; text-align: right; }
+.chip { display: inline-block; padding: 1px 8px; border-radius: 10px; font-size: 12px; white-space: nowrap; border: 1px solid var(--line); }
+.mis { display: inline-block; font-size: 11px; padding: 1px 6px; margin: 1px 2px 1px 0; border-radius: 4px; background: var(--accent-soft); color: var(--text); }
+.riesgo { display: inline-flex; align-items: center; gap: 6px; }
+.dot { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
+.up { color: var(--critico); } .down { color: var(--bajo); }
+.nivel { width: 70px; height: 8px; background: var(--line); border-radius: 4px; overflow: hidden; display: inline-block; vertical-align: middle; }
+.nivel i { display: block; height: 100%; background: var(--serie2); }
+.detalle { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media (max-width: 800px) { .detalle { grid-template-columns: 1fr; } .semana input { width: 150px; } }
+.cfg { display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; font-size: 13px; }
+.cfg span:nth-child(odd) { color: var(--muted); }
+.vacio { color: var(--muted); padding: 20px 0; }
+.leyenda { display: flex; gap: 14px; font-size: 12px; color: var(--muted); margin-top: 4px; }
+.leyenda i { display: inline-block; width: 12px; height: 3px; vertical-align: middle; margin-right: 4px; }
+@media (max-width: 600px) { header, .controles, main { padding-left: 16px; padding-right: 16px; } .barras .b { grid-template-columns: 110px 1fr 40px; } }
+</style>
+</head>
+<body>
+<header>
+  <h1>Monitoreo docente · Fábrica de Investigación de Operaciones</h1>
+  <div class="sub" id="sub"></div>
+</header>
+<div class="controles">
+  <label>Curso <select id="curso"></select></label>
+  <div class="semana">
+    <label>Semana del curso <input type="range" id="semana"></label>
+    <b id="semanaTxt"></b>
+    <button id="play">▶ Simular en tiempo real</button>
+  </div>
+  <label>Buscar estudiante <input type="search" id="buscar" placeholder="ID"></label>
+</div>
+<main>
+  <section class="kpis" id="kpis"></section>
+  <section class="fila">
+    <div class="panel"><h2>Evolución semanal <small>· % en riesgo y dificultad media</small></h2>
+      <svg id="linea" viewBox="0 0 520 220" width="100%"></svg>
+      <div class="leyenda"><span><i style="background:var(--critico)"></i>% en riesgo</span><span><i style="background:var(--serie2)"></i>Dificultad media (1-5)</span></div>
+    </div>
+    <div class="panel"><h2>Perfil diagnosticado <small>· estudiantes que necesitan ayuda</small></h2><div class="barras" id="perfiles"></div></div>
+    <div class="panel"><h2>Rutas que asigna la IA <small>· misión principal</small></h2><div class="barras" id="misiones"></div></div>
+  </section>
+  <section class="panel" id="panelDetalle" hidden></section>
+  <section class="panel">
+    <h2>Estudiantes que necesitan ayuda <small id="cuenta"></small></h2>
+    <div class="tabla-wrap"><table>
+      <thead><tr><th>ID</th><th>Curso</th><th>Riesgo</th><th>Perfil</th><th class="num">Días sin actividad</th><th class="num">Nota media</th><th>Ruta adaptativa asignada</th><th>Dificultad</th></tr></thead>
+      <tbody id="tabla"></tbody>
+    </table></div>
+  </section>
+</main>
+<script>
+const D = /*__DATOS__*/null;
+const F = D.fil, N = F.k.length;
+const $ = id => document.getElementById(id);
+const colorRiesgo = p => p >= 70 ? "var(--critico)" : p >= 50 ? "var(--alto)" : p >= 30 ? "var(--moderado)" : "var(--bajo)";
+const nombreRiesgo = p => p >= 70 ? "Crítico" : p >= 50 ? "Alto" : p >= 30 ? "Moderado" : "Bajo";
+const colorPerfil = ["var(--critico)", "var(--alto)", "var(--moderado)", "var(--serie2)", "var(--muted)", "var(--accent)", "var(--bajo)"];
+
+// Índices: filas por semana y fila (estudiante, semana)
+const porSemana = {}, clave = new Map();
+for (let i = 0; i < N; i++) {
+  (porSemana[F.w[i]] ||= []).push(i);
+  clave.set(F.k[i] * 100 + F.w[i], i);
+}
+const [W0, W1] = D.semanas;
+let semana = W1, curso = -1, seleccionado = null, timer = null;
+
+$("sub").textContent = `Cohorte ${D.presentacion} (OULAD) · ${D.est_id.length.toLocaleString("es")} estudiantes · el sistema recalcula riesgo, perfil y ruta cada semana`;
+$("curso").innerHTML = `<option value="-1">Todos los cursos</option>` + D.cursos.map((c, i) => `<option value="${i}">Módulo ${c}</option>`).join("");
+Object.assign($("semana"), { min: W0, max: W1, value: semana });
+
+const enCurso = i => curso < 0 || D.est_curso[F.k[i]] === curso;
+const filasSemana = w => (porSemana[w] || []).filter(enCurso);
+const prev = i => clave.get(F.k[i] * 100 + F.w[i] - 1);
+
+function kpis(filas) {
+  const ayuda = filas.filter(i => F.p[i] >= 50);
+  const crit = ayuda.filter(i => F.p[i] >= 70).length;
+  const nuevas = ayuda.filter(i => { const j = prev(i); return j !== undefined && F.p[j] < 50; }).length;
+  const prevFilas = filasSemana(semana - 1);
+  const prevAyuda = prevFilas.filter(i => F.p[i] >= 50).length;
+  const dif = filas.reduce((s, i) => s + F.nd[i], 0) / (filas.length || 1) / 10;
+  const pct = filas.length ? ayuda.length / filas.length * 100 : 0;
+  const delta = prevFilas.length ? pct - prevAyuda / prevFilas.length * 100 : 0;
+  const tarjetas = [
+    ["Estudiantes activos", filas.length.toLocaleString("es"), ""],
+    ["Necesitan ayuda (riesgo ≥ 50%)", ayuda.length.toLocaleString("es"),
+      prevFilas.length ? `<span class="${delta > 0 ? "up" : "down"}">${delta > 0 ? "▲" : "▼"} ${Math.abs(delta).toFixed(1)} pts vs. semana anterior</span>` : ""],
+    ["Riesgo crítico (≥ 70%)", crit.toLocaleString("es"), ""],
+    ["Alertas nuevas esta semana", nuevas.toLocaleString("es"), `<span class="muted">cruzaron el umbral de 50%</span>`],
+    ["Dificultad media de la fábrica", dif.toFixed(2) + " / 5", ""],
+  ];
+  $("kpis").innerHTML = tarjetas.map(([l, v, d]) => `<div class="kpi"><div class="l">${l}</div><div class="v">${v}</div><div class="d">${d}</div></div>`).join("");
+  return ayuda;
+}
+
+function barras(el, conteo, etiquetas, colores) {
+  const total = conteo.reduce((a, b) => a + b, 0) || 1;
+  const orden = conteo.map((n, i) => [n, i]).filter(x => x[0] > 0).sort((a, b) => b[0] - a[0]).slice(0, 8);
+  const max = orden.length ? orden[0][0] : 1;
+  el.innerHTML = orden.map(([n, i]) => `<div class="b"><span title="${etiquetas[i]}">${etiquetas[i]}</span>
+    <span class="t"><i style="width:${n / max * 100}%;${colores ? `background:${colores[i]}` : ""}"></i></span>
+    <span class="n">${Math.round(n / total * 100)}%</span></div>`).join("") || `<div class="vacio">Sin datos</div>`;
+}
+
+function linea() {
+  const ws = [], riesgo = [], dif = [];
+  for (let w = W0; w <= W1; w++) {
+    const f = filasSemana(w);
+    ws.push(w);
+    riesgo.push(f.length ? f.filter(i => F.p[i] >= 50).length / f.length * 100 : 0);
+    dif.push(f.length ? f.reduce((s, i) => s + F.nd[i], 0) / f.length / 10 : 0);
+  }
+  const x0 = 36, x1 = 484, y0 = 190, y1 = 14;
+  const X = w => x0 + (w - W0) / (W1 - W0) * (x1 - x0);
+  const Yr = v => y0 - v / 60 * (y0 - y1);          // eje izq: 0-60 %
+  const Yd = v => y0 - (v - 1) / 4 * (y0 - y1);     // eje der: 1-5
+  let s = "";
+  for (const v of [0, 20, 40, 60]) s += `<line x1="${x0}" x2="${x1}" y1="${Yr(v)}" y2="${Yr(v)}" stroke="var(--line)"/><text x="${x0 - 6}" y="${Yr(v) + 4}" text-anchor="end">${v}%</text>`;
+  for (const v of [1, 3, 5]) s += `<text x="${x1 + 6}" y="${Yd(v) + 4}">${v}</text>`;
+  for (let w = W0; w <= W1; w += 2) s += `<text x="${X(w)}" y="${y0 + 16}" text-anchor="middle">${w}</text>`;
+  s += `<line x1="${X(semana)}" x2="${X(semana)}" y1="${y1}" y2="${y0}" stroke="var(--accent)" stroke-dasharray="3 3"/>`;
+  const path = (arr, Y) => arr.map((v, i) => `${i ? "L" : "M"}${X(ws[i]).toFixed(1)},${Y(v).toFixed(1)}`).join("");
+  s += `<path d="${path(riesgo, Yr)}" fill="none" stroke="var(--critico)" stroke-width="2"/>`;
+  s += `<path d="${path(dif, Yd)}" fill="none" stroke="var(--serie2)" stroke-width="2"/>`;
+  const k = semana - W0;
+  s += `<circle cx="${X(semana)}" cy="${Yr(riesgo[k])}" r="4" fill="var(--critico)"><title>Semana ${semana}: ${riesgo[k].toFixed(1)}% en riesgo</title></circle>`;
+  s += `<circle cx="${X(semana)}" cy="${Yd(dif[k])}" r="4" fill="var(--serie2)"><title>Dificultad media ${dif[k].toFixed(2)}</title></circle>`;
+  $("linea").innerHTML = s;
+}
+
+function rutaHTML(r) {
+  return D.rutas[r].split(" > ").map(m => `<span class="mis" title="${D.misiones[m] || ""}">${m}</span>`).join("");
+}
+
+function tabla(ayuda) {
+  const q = $("buscar").value.trim();
+  let filas = q ? filasSemana(semana).filter(i => String(D.est_id[F.k[i]]).includes(q)) : ayuda;
+  filas = filas.slice().sort((a, b) => F.p[b] - F.p[a]);
+  $("cuenta").textContent = q ? `· ${filas.length} coincidencias` : `· ${ayuda.length.toLocaleString("es")} en la semana ${semana} (se muestran 100)`;
+  $("tabla").innerHTML = filas.slice(0, 100).map(i => {
+    const j = prev(i), dp = j === undefined ? 0 : F.p[i] - F.p[j];
+    const tend = dp > 2 ? `<span class="up">▲${dp}</span>` : dp < -2 ? `<span class="down">▼${-dp}</span>` : "";
+    return `<tr data-k="${F.k[i]}" class="${seleccionado === F.k[i] ? "sel" : ""}">
+      <td>${D.est_id[F.k[i]]}</td><td>${D.cursos[D.est_curso[F.k[i]]]}</td>
+      <td><span class="riesgo"><span class="dot" style="background:${colorRiesgo(F.p[i])}"></span>${F.p[i]}% ${tend}</span></td>
+      <td><span class="chip" style="border-color:${colorPerfil[F.pf[i]]}">${D.perfiles[F.pf[i]]}</span></td>
+      <td class="num">${F.ds[i]}</td><td class="num">${F.nt[i] < 0 ? "—" : F.nt[i]}</td>
+      <td>${rutaHTML(F.r[i])}</td>
+      <td><span class="nivel"><i style="width:${(F.nd[i] / 10 - 1) / 4 * 100}%"></i></span> ${(F.nd[i] / 10).toFixed(1)}</td></tr>`;
+  }).join("") || `<tr><td colspan="8" class="vacio">No hay estudiantes en esta selección.</td></tr>`;
+}
+
+function chispa(valores, max, color, etiqueta) {
+  const w = 300, h = 60, n = valores.length;
+  const X = i => 4 + i / Math.max(1, n - 1) * (w - 8), Y = v => h - 4 - v / max * (h - 8);
+  const d = valores.map((v, i) => `${i ? "L" : "M"}${X(i)},${Y(v)}`).join("");
+  return `<div style="font-size:12px;color:var(--muted);margin-top:6px">${etiqueta}</div>
+    <svg viewBox="0 0 ${w} ${h}" preserveAspectRatio="none" style="width:100%;height:60px;display:block;border-bottom:1px solid var(--line)">
+    <path d="${d}" fill="none" stroke="${color}" stroke-width="2" vector-effect="non-scaling-stroke"/></svg>`;
+}
+
+function detalle() {
+  const panel = $("panelDetalle");
+  if (seleccionado === null) { panel.hidden = true; return; }
+  const filas = [];
+  for (let w = W0; w <= semana; w++) { const i = clave.get(seleccionado * 100 + w); if (i !== undefined) filas.push(i); }
+  if (!filas.length) { panel.hidden = true; return; }
+  const i = filas[filas.length - 1];
+  panel.hidden = false;
+  const ruta = D.rutas[F.r[i]].split(" > ").map(m => `<div><span class="mis">${m}</span> ${D.misiones[m] || ""}</div>`).join("");
+  panel.innerHTML = `<h2>Estudiante ${D.est_id[seleccionado]} · Módulo ${D.cursos[D.est_curso[seleccionado]]} <small>· semana ${F.w[i]}</small>
+      <button class="sec" style="float:right" id="cerrar">Cerrar</button></h2>
+    <p style="margin:0 0 10px">Riesgo <b style="color:${colorRiesgo(F.p[i])}">${F.p[i]}% (${nombreRiesgo(F.p[i])})</b> · perfil <b>${D.perfiles[F.pf[i]]}</b> ·
+      tema a reforzar <b>${D.temas[F.td[i]]}</b> · formato poco usado frente a pares exitosos: <b>${D.formatos[F.fd[i]]}</b>.</p>
+    <div class="detalle">
+      <div>${chispa(filas.map(j => F.p[j]), 100, "var(--critico)", "Probabilidad de riesgo (%)")}
+           ${chispa(filas.map(j => F.nd[j] / 10 - 1), 4, "var(--serie2)", "Nivel de dificultad (1-5)")}</div>
+      <div><h2>Ruta adaptativa</h2>${ruta}
+        <h2 style="margin-top:12px">Configuración actual de la fábrica</h2>
+        <div class="cfg"><span>Velocidad de máquinas</span><span>${F.vm[i]}×</span>
+          <span>Llegada de pedidos</span><span>${F.tp[i]} /hora</span>
+          <span>Pistas disponibles</span><span>${F.pi[i]}</span>
+          <span>Desempeño semanal</span><span>${F.d[i]} / 100</span></div></div>
+    </div>`;
+  $("cerrar").onclick = () => { seleccionado = null; render(); };
+}
+
+function render() {
+  $("semanaTxt").textContent = `Semana ${semana}`;
+  $("semana").value = semana;
+  const filas = filasSemana(semana);
+  const ayuda = kpis(filas);
+  const cp = new Array(D.perfiles.length).fill(0);
+  ayuda.forEach(i => cp[F.pf[i]]++);
+  barras($("perfiles"), cp, D.perfiles, colorPerfil);
+  const ids = Object.keys(D.misiones), cm = new Array(ids.length).fill(0);
+  filas.forEach(i => { const m = D.rutas[F.r[i]].split(" > ").find(x => !/-0$/.test(x)); cm[ids.indexOf(m)]++; });
+  barras($("misiones"), cm, ids.map(m => `${m} · ${D.misiones[m]}`));
+  linea();
+  tabla(ayuda);
+  detalle();
+}
+
+$("semana").oninput = e => { semana = +e.target.value; render(); };
+$("curso").onchange = e => { curso = +e.target.value; render(); };
+$("buscar").oninput = () => render();
+$("tabla").onclick = e => { const tr = e.target.closest("tr[data-k]"); if (tr) { seleccionado = +tr.dataset.k; render(); $("panelDetalle").scrollIntoView({ behavior: "smooth", block: "nearest" }); } };
+$("play").onclick = () => {
+  if (timer) { clearInterval(timer); timer = null; $("play").textContent = "▶ Simular en tiempo real"; return; }
+  if (semana >= W1) semana = W0;
+  $("play").textContent = "⏸ Pausar";
+  timer = setInterval(() => { if (semana >= W1) { $("play").click(); return; } semana++; render(); }, 900);
+};
+render();
+</script>
+</body>
+</html>

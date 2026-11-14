@@ -1,0 +1,39 @@
+{
+  "descripcion": "Catálogo de misiones de refuerzo de Investigación de Operaciones (IO) dentro de la fábrica gamificada. nivel: 1=refuerzo guiado, 2=práctica, 3=reto. formato se corresponde con el tipo de recurso de OULAD que trabaja (oucontent=lectura interactiva, quiz=práctica evaluada, forumng=colaborativa, resource=recurso de apoyo).",
+  "temas": [
+    "Programación lineal",
+    "Transporte y asignación",
+    "Gestión de inventarios",
+    "Teoría de colas",
+    "Balanceo de líneas",
+    "Planificación de proyectos (PERT/CPM)",
+    "Simulación de procesos"
+  ],
+  "misiones": [
+    {"id": "PL-1", "tema": "Programación lineal", "nivel": 1, "formato": "oucontent", "duracion_min": 15, "perfiles": ["Frustración", "Bajo rendimiento", "Desconexión"], "titulo": "Mezcla de producción guiada", "descripcion": "Con pistas paso a paso, decide cuántas unidades de dos productos fabricar para maximizar la utilidad con dos recursos limitados (método gráfico)."},
+    {"id": "PL-2", "tema": "Programación lineal", "nivel": 2, "formato": "quiz", "duracion_min": 25, "perfiles": ["En progreso", "Procrastinación", "Riesgo general"], "titulo": "Plan semanal de la planta", "descripcion": "Formula el modelo de PL del plan semanal (3 productos, 3 máquinas) y valida la solución en el simulador."},
+    {"id": "PL-3", "tema": "Programación lineal", "nivel": 3, "formato": "quiz", "duracion_min": 40, "perfiles": ["Avanzado"], "titulo": "Análisis de sensibilidad bajo presión", "descripcion": "Un proveedor sube costos: usa precios sombra para reajustar el plan sin resolver de nuevo."},
+    {"id": "TA-1", "tema": "Transporte y asignación", "nivel": 1, "formato": "resource", "duracion_min": 15, "perfiles": ["Frustración", "Desconexión", "Bajo rendimiento"], "titulo": "Rutas al almacén", "descripcion": "Asigna camiones a 3 almacenes con la regla de la esquina noroeste y compara el costo con una guía visual."},
+    {"id": "TA-2", "tema": "Transporte y asignación", "nivel": 2, "formato": "forumng", "duracion_min": 30, "perfiles": ["En progreso", "Riesgo general", "Procrastinación"], "titulo": "Asignación de operarios en equipo", "descripcion": "En equipo, aplica el método húngaro para asignar operarios a estaciones y discute la solución en el foro."},
+    {"id": "TA-3", "tema": "Transporte y asignación", "nivel": 3, "formato": "quiz", "duracion_min": 40, "perfiles": ["Avanzado"], "titulo": "Red logística con transbordo", "descripcion": "Optimiza una red de distribución con nodos de transbordo y capacidades limitadas."},
+    {"id": "IN-1", "tema": "Gestión de inventarios", "nivel": 1, "formato": "oucontent", "duracion_min": 15, "perfiles": ["Frustración", "Bajo rendimiento", "Desconexión"], "titulo": "El almacén que se desborda", "descripcion": "Lectura interactiva sobre el lote económico (EOQ) con un ejemplo resuelto del almacén de la fábrica."},
+    {"id": "IN-2", "tema": "Gestión de inventarios", "nivel": 2, "formato": "quiz", "duracion_min": 25, "perfiles": ["En progreso", "Riesgo general", "Procrastinación"], "titulo": "Punto de reorden", "descripcion": "Calcula EOQ y punto de reorden con demanda conocida y evita quiebres de stock durante 4 turnos simulados."},
+    {"id": "IN-3", "tema": "Gestión de inventarios", "nivel": 3, "formato": "quiz", "duracion_min": 40, "perfiles": ["Avanzado"], "titulo": "Inventario con demanda incierta", "descripcion": "Define stock de seguridad con demanda aleatoria y descuentos por volumen."},
+    {"id": "CO-1", "tema": "Teoría de colas", "nivel": 1, "formato": "resource", "duracion_min": 15, "perfiles": ["Frustración", "Desconexión", "Bajo rendimiento"], "titulo": "La fila en la estación de pintura", "descripcion": "Observa la animación de una cola M/M/1 y relaciona tasa de llegada, tasa de servicio y espera."},
+    {"id": "CO-2", "tema": "Teoría de colas", "nivel": 2, "formato": "quiz", "duracion_min": 25, "perfiles": ["En progreso", "Riesgo general", "Procrastinación"], "titulo": "¿Cuántos servidores?", "descripcion": "Calcula Lq, Wq y utilización para decidir entre 1 y 2 estaciones de servicio (M/M/c)."},
+    {"id": "CO-3", "tema": "Teoría de colas", "nivel": 3, "formato": "forumng", "duracion_min": 40, "perfiles": ["Avanzado"], "titulo": "Diseño de la línea de despacho", "descripcion": "Propón y defiende en el foro un diseño de despacho que minimice costo de espera + costo de servidores."},
+    {"id": "BL-1", "tema": "Balanceo de líneas", "nivel": 1, "formato": "oucontent", "duracion_min": 15, "perfiles": ["Frustración", "Bajo rendimiento", "Desconexión"], "titulo": "Ordena las tareas", "descripcion": "Arrastra tareas a estaciones respetando precedencias, con retroalimentación inmediata del tiempo de ciclo."},
+    {"id": "BL-2", "tema": "Balanceo de líneas", "nivel": 2, "formato": "quiz", "duracion_min": 25, "perfiles": ["En progreso", "Riesgo general", "Procrastinación"], "titulo": "Eficiencia de la línea", "descripcion": "Balancea una línea de 10 tareas con la regla del mayor tiempo y calcula la eficiencia."},
+    {"id": "BL-3", "tema": "Balanceo de líneas", "nivel": 3, "formato": "quiz", "duracion_min": 40, "perfiles": ["Avanzado"], "titulo": "Línea de modelos mixtos", "descripcion": "Balancea una línea que fabrica dos modelos con demanda distinta."},
+    {"id": "PR-1", "tema": "Planificación de proyectos (PERT/CPM)", "nivel": 1, "formato": "resource", "duracion_min": 15, "perfiles": ["Frustración", "Desconexión", "Bajo rendimiento"], "titulo": "La ruta crítica de la remodelación", "descripcion": "Identifica la ruta crítica en un diagrama de red ya dibujado."},
+    {"id": "PR-2", "tema": "Planificación de proyectos (PERT/CPM)", "nivel": 2, "formato": "forumng", "duracion_min": 30, "perfiles": ["En progreso", "Riesgo general", "Procrastinación"], "titulo": "Instalación de la nueva máquina", "descripcion": "Construye la red PERT, calcula holguras y comparte el cronograma en el foro del equipo."},
+    {"id": "PR-3", "tema": "Planificación de proyectos (PERT/CPM)", "nivel": 3, "formato": "quiz", "duracion_min": 40, "perfiles": ["Avanzado"], "titulo": "Compresión de proyecto (crashing)", "descripcion": "Reduce la duración del proyecto al menor costo adicional posible."},
+    {"id": "SI-1", "tema": "Simulación de procesos", "nivel": 1, "formato": "oucontent", "duracion_min": 15, "perfiles": ["Frustración", "Bajo rendimiento", "Desconexión"], "titulo": "Lanza los dados de la demanda", "descripcion": "Simula a mano 10 días de demanda con números aleatorios y observa la variabilidad."},
+    {"id": "SI-2", "tema": "Simulación de procesos", "nivel": 2, "formato": "quiz", "duracion_min": 25, "perfiles": ["En progreso", "Riesgo general", "Procrastinación"], "titulo": "Montecarlo en la planta", "descripcion": "Simula 100 turnos de la planta y estima la producción esperada con intervalo de confianza."},
+    {"id": "SI-3", "tema": "Simulación de procesos", "nivel": 3, "formato": "forumng", "duracion_min": 40, "perfiles": ["Avanzado"], "titulo": "Gemelo digital de la fábrica", "descripcion": "Compara dos configuraciones de la fábrica con simulación de eventos discretos y argumenta la mejor."}
+  ],
+  "misiones_especiales": {
+    "Desconexión": {"id": "RE-0", "titulo": "Misión de reenganche (5 min)", "descripcion": "Micro-misión con recompensa inmediata para volver a la fábrica + aviso al docente."},
+    "Procrastinación": {"id": "PC-0", "titulo": "Checkpoint de entregas", "descripcion": "Divide la próxima entrega en 3 hitos con fecha; cada hito desbloquea una mejora de la fábrica."}
+  }
+}

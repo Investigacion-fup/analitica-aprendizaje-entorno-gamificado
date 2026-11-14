@@ -1,0 +1,67 @@
+{
+  "courses.csv": {
+    "filas": 22,
+    "nulos": {}
+  },
+  "assessments.csv": {
+    "filas": 206,
+    "nulos": {
+      "date": 11
+    }
+  },
+  "vle.csv": {
+    "filas": 6364,
+    "nulos": {
+      "week_from": 5243,
+      "week_to": 5243
+    }
+  },
+  "studentInfo.csv": {
+    "filas": 32593,
+    "nulos": {
+      "imd_band": 1111
+    }
+  },
+  "studentRegistration.csv": {
+    "filas": 32593,
+    "nulos": {
+      "date_registration": 45,
+      "date_unregistration": 22521
+    }
+  },
+  "studentAssessment.csv": {
+    "filas": 173912,
+    "nulos": {
+      "score": 173
+    }
+  },
+  "studentVle.csv": {
+    "filas": 10655280,
+    "nulos": {}
+  },
+  "limpieza_estudiantes": {
+    "duplicados_eliminados": 0,
+    "registros_finales": 32593,
+    "imd_imputados_por_region": 1111,
+    "tasa_riesgo_global": 0.528
+  },
+  "agregacion_clics": {
+    "registros_originales": 10655280,
+    "registros_agregados": 5370170,
+    "reduccion_pct": 49.6,
+    "clics_totales": 39605099,
+    "estudiantes_con_actividad": 29228
+  },
+  "entregas": {
+    "evaluaciones_esperadas": 286898,
+    "entregadas": 168953,
+    "tardias": 49311
+  },
+  "dataset_estructurado": {
+    "dia_corte": 90,
+    "filas": 25562,
+    "columnas": 58,
+    "excluidos_por_baja_previa": 7031
+  },
+  "tiempo_segundos": 11.7
+}

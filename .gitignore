@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.venv/
+venv/
+.env
+# Datos originales de OULAD: se descargan aparte (ver oulad/LEEME.txt)
+oulad/*
+!oulad/LEEME.txt
+~$*
+*.zip
